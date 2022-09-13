@@ -45,7 +45,7 @@ public class SquirtleThing extends PokeThing {
 		{
 			setDirection(getDirection().right());
 		}
-				
+				//test//
 		move();
 	}
 }
