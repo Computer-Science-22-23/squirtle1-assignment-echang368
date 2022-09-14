@@ -28,8 +28,9 @@ public class BulbasaurThing extends PokeThing {
 	 */	
 	public void step()
 	{
+		movementPattern();
 		putFlower();
-		move();
+
 	}
 	
 	/**
@@ -39,5 +40,38 @@ public class BulbasaurThing extends PokeThing {
 	{
 		Gui g = getBoard().getGui();
 		g.appendTextWindow("Bulbasaur has been tickled.");
+	}
+	
+	public void movementPattern()
+	{
+		// Check the 'next' Location.  If there is a PokeThing or wall there, turn.
+		boolean blocked;
+		boolean stuck;
+
+			
+		Location nextLoc = getDirection().getNextLocation(getLocation()); 
+		blocked = getBoard().thingAt(nextLoc) instanceof SquirtleThing;
+		stuck = !(nextLoc.isValid(getBoard()));
+		
+		
+		if (stuck)
+		{
+			setDirection(getDirection().left());
+		}
+		if (blocked)
+		{
+			setDirection(getDirection().right());
+			
+
+		}
+		
+		if (getBoard().thingAt(nextLoc) instanceof FlowerThing) 
+		{
+			Gui g = getBoard().getGui();
+			g.appendTextWindow("Squirtle has smelled a flower");
+		}
+		
+				//test//
+		move();
 	}
 }

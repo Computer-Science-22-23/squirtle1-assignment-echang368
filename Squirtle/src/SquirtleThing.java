@@ -24,6 +24,7 @@ public class SquirtleThing extends PokeThing {
 		movementPattern();
 		
 		Gui g = getBoard().getGui();
+		squaresMoved = squaresMoved + 1;
 		g.appendTextWindow("Squirtle has moved " + squaresMoved + " squares.");
 	}
 	
@@ -37,14 +38,33 @@ public class SquirtleThing extends PokeThing {
 		// Check the 'next' Location.  If there is a PokeThing or wall there, turn.
 		boolean blocked;
 		boolean stuck;
+
 			
 		Location nextLoc = getDirection().getNextLocation(getLocation()); 
 		blocked = getBoard().thingAt(nextLoc) instanceof PokeThing;
 		stuck = !(nextLoc.isValid(getBoard()));
-		if (blocked || stuck)
+		
+		
+		if (stuck)
 		{
 			setDirection(getDirection().right());
 		}
+		if (blocked)
+		{
+			Gui g = getBoard().getGui();
+			g.appendTextWindow("Squirtle saw a Bulbasaur");
+			setDirection(getDirection().right());
+			move();
+			setDirection(getDirection().left());
+
+		}
+		
+		if (getBoard().thingAt(nextLoc) instanceof FlowerThing) 
+		{
+			Gui g = getBoard().getGui();
+			g.appendTextWindow("Squirtle has smelled a flower");
+		}
+		
 				//test//
 		move();
 	}
